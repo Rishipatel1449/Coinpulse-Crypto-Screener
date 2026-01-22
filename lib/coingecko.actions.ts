@@ -15,6 +15,15 @@ if (!API_KEY) {
 const BASE_URL_SAFE: string = BASE_URL;
 const API_KEY_SAFE: string = API_KEY;
 
+/**
+ * Fetches JSON from a CoinGecko API endpoint and returns the parsed response.
+ *
+ * @param endpoint - Path relative to the configured CoinGecko base URL (leading slash allowed)
+ * @param params - Optional query parameters to append; empty strings and null values are omitted
+ * @param revalidate - Cache revalidation time in seconds for Next.js fetch caching
+ * @returns The parsed JSON response from the API as `T`
+ * @throws Error when the HTTP response is not OK; the error message includes the parsed error body (if available) and the response status
+ */
 export async function fetcher<T>(
   endpoint: string,
   params?: QueryParams,
