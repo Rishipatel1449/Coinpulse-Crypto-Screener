@@ -5,12 +5,17 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { TrendingUp } from "lucide-react";
 
+interface TrendingCoinsResponse {
+  coins: TrendingCoin[];
+}
+
 const TrendingCoins = async () => {
-  const trendingCoins = await fetcher<TrendingCoin[]>(
+  const response = await fetcher<TrendingCoinsResponse>(
     "/search/trending",
     undefined,
     300
   );
+  const trendingCoins = response.coins || [];
   const columns: DataTableColumn<TrendingCoin>[] = [
     {
       header: " Name",
@@ -65,11 +70,10 @@ const TrendingCoins = async () => {
   ];
   return (
     <>
-    <div id="trending-coinsr">
-      <h1>Trending Coins</h1>
-      
+      <div id="trending-coins">
+        <p>Trending Coins</p>
         <DataTable
-          data={trendingCoins.coins.slice(0, 10) || []}
+          data={trendingCoins.slice(0, 10) || []}
           columns={columns}
           rowKey={(coin) => coin.item.id}
           tableClassName="trending-coins-table"
