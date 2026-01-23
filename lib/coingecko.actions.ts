@@ -71,3 +71,13 @@ export async function getPools(
     return fallback;
   }
 }
+
+export async function searchCoins(query: string): Promise<SearchCoin[]> {
+  try {
+    const data = await fetcher<{ coins: SearchCoin[] }>('/search', { query });
+    return data.coins || [];
+  } catch (error) {
+    console.error('Search API Error:', error);
+    return [];
+  }
+}
